@@ -13,11 +13,12 @@ namespace ArbolAVLtarea
         {
             ArbolBinario arbol = new ArbolBinario();
             ArbolAVL arbolAvl = new ArbolAVL();
+            ArbolAVL aletorios = new ArbolAVL();
 
             while (true)
             {
                 Console.WriteLine("\nMenú Principal:");
-                Console.WriteLine("1. Trabajar con Árbol BTS");
+                Console.WriteLine("1. Trabajar con Árbol BST");
                 Console.WriteLine("2. Trabajar con Árbol AVL");
                 Console.WriteLine("3. Salir");
                 Console.Write("Seleccione una opción: ");
@@ -55,7 +56,8 @@ namespace ArbolAVLtarea
                 Console.WriteLine("5.- Buscar un Valor");
                 Console.WriteLine("6.- Mostrar gráfica del árbol");
                 Console.WriteLine("7.- Calcular propiedades del árbol");
-                Console.WriteLine("8.- Salir");
+                Console.WriteLine("8.- Insertar numeros aleatorios");
+                Console.WriteLine("9.- Salir");
                 Console.WriteLine("Elija una opción");
                 opcion = Convert.ToInt32(Console.ReadLine());
 
@@ -93,13 +95,17 @@ namespace ArbolAVLtarea
                         Console.WriteLine($"Orden del árbol: {arbol.CalcularOrden(arbol.raiz):F2}");
                         break;
                     case 8:
+
+                        arbol.InsertarAleatorio();
+                        break;
+                    case 9:
                         Console.WriteLine("Adios");
                         break;
                     default:
                         Console.WriteLine("Opción inválida");
                         break;
                 }
-            } while (opcion != 8);
+            } while (opcion != 9);
         }
 
         static void MenuAVL(ArbolAVL arbolAvl)
@@ -111,7 +117,8 @@ namespace ArbolAVLtarea
                 Console.WriteLine("2. Buscar elemento");
                 Console.WriteLine("3. Eliminar elemento");
                 Console.WriteLine("4. Imprimir arbol y rrecorridos");
-                Console.WriteLine("5. Regresar al Menú Principal");
+                Console.WriteLine("5. Realizar operacion insertando numeros aleatorios");
+                Console.WriteLine("6. Regresar al Menú Principal");
                 Console.Write("Seleccione una opción: ");
 
                 int opcion = int.Parse(Console.ReadLine());
@@ -160,8 +167,12 @@ namespace ArbolAVLtarea
                         Console.WriteLine("arbol");
                         arbolAvl.ImprimirArbol();
                         break;
-
                     case 5:
+                        Console.WriteLine("Generando numeros aleatoreos");
+                        arbolAvl.InsertarAleatorios();
+                        break;
+
+                    case 6:
                         return;
 
                     default:

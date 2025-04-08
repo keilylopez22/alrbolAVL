@@ -1,4 +1,6 @@
-﻿namespace ArbolAVLtarea
+﻿using System.Drawing;
+
+namespace ArbolAVLtarea
 {
     internal class Program
     {
@@ -28,44 +30,7 @@
             raiz = null;
         }
         //metodo preorden
-        public void preorden(Nodo nodo)
-        {
-            if (nodo != null)
-            {
-                Console.Write(nodo.valor + " ");
-                preorden(nodo.izq);
-                preorden(nodo.der);
-            }
-        }
-
-        public bool Buscar(string valor)
-        {
-            int comparaciones = 0;
-            return BuscarPreorden(raiz, valor, ref comparaciones) ||
-                   BuscarInorden(raiz, valor, ref comparaciones) ||
-                   BuscarPostorden(raiz, valor, ref comparaciones);
-        }
-
-        //metodo inorden
-        public void inorden(Nodo nodo)
-        {
-            if (nodo != null)
-            {
-                inorden(nodo.izq);
-                Console.Write(nodo.valor + " ");
-                inorden(nodo.der);
-            }
-        }
-        //metodo postorden
-        public void postorden(Nodo nodo)
-        {
-            if (nodo != null)
-            {
-                postorden(nodo.izq);
-                postorden(nodo.der);
-                Console.Write(nodo.valor + " ");
-            }
-        }
+        
         //metodo insertar nodos al arbol
         public void InsertarNodo(string valor)
         {
@@ -104,6 +69,54 @@
                 }
             }
         }
+        public void InsertarAleatorio(){
+            for (int i = 0; i <= 10000; i++)
+            {
+                Random ramdom = new Random();
+                int numeroaleatorio = ramdom.Next();
+                InsertarNodo(numeroaleatorio.ToString());
+            }
+        }
+
+        public bool Buscar(string valor)
+        {
+            int comparaciones = 0;
+            return BuscarPreorden(raiz, valor, ref comparaciones) ||
+                   BuscarInorden(raiz, valor, ref comparaciones) ||
+                   BuscarPostorden(raiz, valor, ref comparaciones);
+        }
+        public void preorden(Nodo nodo)
+        {
+            if (nodo != null)
+            {
+                Console.Write(nodo.valor + " ");
+                preorden(nodo.izq);
+                preorden(nodo.der);
+            }
+        }
+
+
+        //metodo inorden
+        public void inorden(Nodo nodo)
+        {
+            if (nodo != null)
+            {
+                inorden(nodo.izq);
+                Console.Write(nodo.valor + " ");
+                inorden(nodo.der);
+            }
+        }
+        //metodo postorden
+        public void postorden(Nodo nodo)
+        {
+            if (nodo != null)
+            {
+                postorden(nodo.izq);
+                postorden(nodo.der);
+                Console.Write(nodo.valor + " ");
+            }
+        }
+        
         //propiedades del arbol
         public int CalcularAltura(Nodo nodo)
         {
@@ -209,7 +222,8 @@
         // Eliminar el modificador 'public' de los métodos dentro de la clase ArbolBinario
         public void ImprimirArbol()
         {
-            if (raiz == null)
+            ImprimirArbolBST(raiz, "", true);
+           /* if (raiz == null)
             {
                 Console.WriteLine("El árbol está vacío.");
                 return;
@@ -225,11 +239,25 @@
                     Console.Write(item);
                 }
                 Console.WriteLine();
+            }*/
+        }
+
+        public void ImprimirArbolBST(Nodo raiz, string indent = "", bool esDerecha = true)
+        {
+            if (raiz != null)
+            {
+                // Imprimimos el árbol primero la derecha y luego la izquierda
+                ImprimirArbolBST(raiz.der, indent + (esDerecha ? "     " : "│    "), false);
+
+                // Imprimimos el valor del nodo, con el borde adecuado
+                Console.WriteLine(indent + (esDerecha ? "└── " : "┌── ") + raiz.valor);
+
+                ImprimirArbolBST(raiz.izq, indent + (esDerecha ? "│    " : "     "), true);
             }
         }
 
         // Construye una lista de listas para representar el árbol en niveles con los caracteres / \
-        private List<List<string>> ConstruirNiveles(Nodo raiz)
+        /*private List<List<string>> ConstruirNiveles(Nodo raiz)
         {
             List<List<string>> resultado = new List<List<string>>();
             Queue<Nodo> cola = new Queue<Nodo>();
@@ -265,7 +293,7 @@
                 resultado.Add(conexiones);
             }
             return resultado;
-        }
+        }*/
 
 
         //recorridos del arbol
@@ -491,6 +519,16 @@
             // Paso 3: Balancear el nodo y retornar el nodo balanceado
             return Balancear(nodo);
         }
+        // Método para insertar random
+        public void InsertarAleatorios()
+        {
+            for (int i = 0; i <= 10000; i++)
+            {
+                Random ramdom = new Random();
+                int numeroaleatorio = ramdom.Next();
+                InsertarNodoAVL(numeroaleatorio.ToString());
+            }
+        }
 
         // Método para eliminar un nodo en un árbol AVL
         public void EliminarNodoAVL(string valor)
@@ -617,6 +655,9 @@
                 ImprimirArbolAVL(raiz.izq, indent + (esDerecha ? "│    " : "     "), true);
             }
         }
+
+        
+
 
 
 
