@@ -8,18 +8,59 @@ namespace ArbolAVLtarea
 {
     public  class Menu
     {
+        static ArbolBinario arbol = new ArbolBinario();
+        static ArbolAVL arbolAvl = new ArbolAVL();
+
+        static void CompararArboles()
+        {
+            Console.WriteLine("Comparando árboles...");
+           
+            InsertarAleatorios();
+            arbolAvl.ImprimirArbol();
+            Console.WriteLine("Ingrese un numero");
+            string numero = Console.ReadLine();
+            arbolAvl.Buscar(numero);
+            arbol.BuscarValor(numero);
+            double tiempoArbolAVL = arbolAvl.TiempoBusqueda;
+            double tiempoArbolBinario = arbol.TiempoBusqueda;
+            Console.Clear();
+            //comparar tiempos
+            if (tiempoArbolAVL < tiempoArbolBinario)
+            {
+                Console.WriteLine($"El Árbol AVL es más rápido ({tiempoArbolAVL} ms) que el Árbol Binario de Búsqueda ({tiempoArbolBinario} ms).");
+            }
+            else if (tiempoArbolAVL > tiempoArbolBinario)
+            {
+                Console.WriteLine($"El Árbol Binario de Búsqueda es más rápido ({tiempoArbolBinario} ms) que el Árbol AVL ({tiempoArbolAVL} ms).");
+            }
+            else
+            {
+                Console.WriteLine("Ambos árboles tienen el mismo tiempo de búsqueda.");
+            }
+
+        }
+        static void InsertarAleatorios()
+        {
+            Random random = new Random();
+            for (int i = 0; i < 10000; i++)
+            {
+                int numeroAleatorio = random.Next();
+                arbol.InsertarNodo(numeroAleatorio.ToString());
+                arbolAvl.InsertarNodoAVL(numeroAleatorio.ToString());
+            }
+        }
 
         static void Main(string[] args)
         {
-            ArbolBinario arbol = new ArbolBinario();
-            ArbolAVL arbolAvl = new ArbolAVL();
-            ArbolAVL aletorios = new ArbolAVL();
+            
+            
 
             while (true)
             {
                 Console.WriteLine("\nMenú Principal:");
                 Console.WriteLine("1. Trabajar con Árbol BST");
                 Console.WriteLine("2. Trabajar con Árbol AVL");
+                Console.WriteLine("3. Comparar arboles");
                 Console.WriteLine("3. Salir");
                 Console.Write("Seleccione una opción: ");
 
@@ -34,8 +75,13 @@ namespace ArbolAVLtarea
                         MenuAVL(arbolAvl);
                         break;
                     case 3:
+                        Console.WriteLine("Comparandoo.");
+                        CompararArboles();
+                        return;
+                    case 4:
                         Console.WriteLine("Saliendo del programa...");
                         return;
+
                     default:
                         Console.WriteLine("Opción inválida. Intente de nuevo.");
                         break;

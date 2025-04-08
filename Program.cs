@@ -24,13 +24,27 @@ namespace ArbolAVLtarea
     public class ArbolBinario
     {
         public Nodo raiz;
+
+        //campo que me va a servir para guardar el tiempo de busqueda
+        public double TiempoBusqueda
+        {
+            get; set;
+        }
+
         //constructor
         public ArbolBinario()
         {
             raiz = null;
+
         }
-        //metodo preorden
-        
+        protected double GetTiempoActual()
+        {
+            return DateTime.Now.TimeOfDay.TotalMilliseconds;
+        }
+
+
+
+
         //metodo insertar nodos al arbol
         public void InsertarNodo(string valor)
         {
@@ -80,11 +94,25 @@ namespace ArbolAVLtarea
 
         public bool Buscar(string valor)
         {
+            
+
             int comparaciones = 0;
             return BuscarPreorden(raiz, valor, ref comparaciones) ||
                    BuscarInorden(raiz, valor, ref comparaciones) ||
                    BuscarPostorden(raiz, valor, ref comparaciones);
         }
+
+        public bool BuscarValor(string valor)
+        {
+            double Ti = GetTiempoActual();
+            int comparaciones = 0;
+            bool encontrado = BuscarPreorden(raiz, valor, ref comparaciones);
+            double Tf = GetTiempoActual();
+            TiempoBusqueda = Tf - Ti;
+            return encontrado;
+
+        }
+
         public void preorden(Nodo nodo)
         {
             if (nodo != null)
@@ -594,7 +622,13 @@ namespace ArbolAVLtarea
         // Método público para buscar un elemento en el árbol AVL
         public Nodo Buscar(string valor)
         {
-            return Buscar(raiz, valor);
+            double Ti = GetTiempoActual();
+
+           Nodo encontrado = Buscar(raiz, valor);
+            double Tf = GetTiempoActual();
+            TiempoBusqueda = Tf - Ti;
+            return encontrado;
+
         }
 
         // Método privado recursivo para buscar un nodo con un valor específico
@@ -607,8 +641,9 @@ namespace ArbolAVLtarea
                 return Buscar(nodo.izq, valor);  // Buscar en el subárbol izquierdo
             else
                 return Buscar(nodo.der, valor);  // Buscar en el subárbol derecho
+            
         }
-
+        
         // Método para imprimir gráficamente el árbol AVL
         public void ImprimirArbol()
         {
